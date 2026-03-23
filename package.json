@@ -1,0 +1,22 @@
+{
+  "name": "@elwood/payload-gtm",
+  "version": "1.0.0",
+  "description": "Payload CMS plugin for Google Tag Manager — full GTM configuration from the admin panel with Consent Mode v2 support",
+  "main": "index.ts",
+  "types": "index.ts",
+  "keywords": [
+    "payload",
+    "payload-cms",
+    "google-tag-manager",
+    "gtm",
+    "analytics",
+    "consent-mode"
+  ],
+  "author": "Elwood Agency",
+  "license": "MIT",
+  "peerDependencies": {
+    "payload": ">=3.0.0",
+    "next": ">=15.0.0",
+    "react": ">=18.0.0"
+  }
+}
