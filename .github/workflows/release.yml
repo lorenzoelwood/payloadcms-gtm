@@ -1,0 +1,60 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. 1.0.0)'
+        required: true
+        default: '1.0.0'
+      prerelease:
+        description: 'Mark as pre-release'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version from package.json
+        id: pkg
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Resolve version
+        id: version
+        run: |
+          INPUT="${{ github.event.inputs.version }}"
+          echo "tag=v${INPUT:-${{ steps.pkg.outputs.version }}}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ steps.version.outputs.tag }}
+          prerelease: ${{ github.event.inputs.prerelease }}
+          generate_release_notes: true
+          body: |
+            ## @elwood/payload-gtm ${{ steps.version.outputs.tag }}
+
+            Payload CMS plugin for Google Tag Manager with full **Consent Mode v2** support.
+
+            ### Features
+
+            - GTM configuration from the Payload admin panel
+            - **Consent Mode v2** support (`ad_storage`, `analytics_storage`, `functionality_storage`, `personalization_storage`, `security_storage`, `ad_user_data`, `ad_personalization`)
+            - Automatic tracking: `page_view`, click, scroll depth (25/50/75/100%), form submit, internal search, file downloads
+            - GTM Environments support (`gtm_auth`, `gtm_preview`)
+            - Debug mode
+            - `pushEvent()` and `updateConsent()` utilities for custom events
+
+            ### Installation
+
+            ```bash
+            pnpm add @elwood/payload-gtm
+            ```
