@@ -1,23 +1,23 @@
 # @elwood/payload-gtm
 
-Payload CMS plugin per Google Tag Manager con supporto completo a **Consent Mode v2**.
+Google Tag Manager plugin for Payload CMS with full **Consent Mode v2** support.
 
-## Funzionalità
+## Features
 
-- Configurazione GTM dall'admin panel di Payload
-- Supporto **Consent Mode v2** (6 parametri: ad_storage, analytics_storage, ecc.)
-- Tracking automatico: `page_view`, click, scroll depth (25/50/75/100%), form submit, ricerche interne, download file
-- Supporto GTM Environments (`gtm_auth`, `gtm_preview`)
-- Modalità debug
-- Utility `pushEvent()` e `updateConsent()` per eventi custom
+- GTM configuration directly from the Payload admin panel
+- **Consent Mode v2** support (ad_storage, analytics_storage, etc.)
+- Automatic tracking: `page_view`, clicks, scroll depth (25/50/75/100%), form submissions, internal site searches, file downloads
+- GTM Environments support (`gtm_auth`, `gtm_preview`)
+- Debug mode
+- `pushEvent()` and `updateConsent()` utilities for custom events
 
-## Installazione
+## Installation
 
 ```bash
 pnpm add @elwood/payload-gtm
 ```
 
-## Utilizzo in Payload
+## Usage in Payload
 
 ```typescript
 // payload.config.ts
@@ -30,7 +30,7 @@ export default buildConfig({
 })
 ```
 
-## Componenti Next.js
+## Next.js Components
 
 ```tsx
 // app/layout.tsx
@@ -54,24 +54,24 @@ export default function Layout({ children }) {
 }
 ```
 
-## Utility (client-side)
+## Utilities (client-side)
 
 ```typescript
 import { pushEvent, updateConsent } from '@elwood/payload-gtm/utilities/dataLayer'
 
-// Evento custom
+// Custom event
 pushEvent('purchase', { value: 99.90, currency: 'EUR' })
 
-// Aggiorna consensi (dopo CMP)
+// Update consent (after CMP interaction)
 updateConsent({ analytics_storage: 'granted', ad_storage: 'granted' })
 ```
 
-## Configurazione admin
+## Admin Configuration
 
-Dopo aver installato il plugin, vai su **Admin → Settings → Google Tag Manager** e configura:
+After installing the plugin, navigate to **Admin → Settings → Google Tag Manager** to configure:
 
 - **Container ID** (`GTM-XXXXXXX`)
-- **Consent Mode v2** — valori di default per ogni categoria
-- **Tracking events** — abilita/disabilita singoli eventi
-- **GTM Environments** — per ambienti di staging/preview
+- **Consent Mode v2** — default values for each category
+- **Tracking events** — enable/disable specific event triggers
+- **GTM Environments** — for staging/preview environments
 - **Debug mode**
